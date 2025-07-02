@@ -2,17 +2,9 @@
 
 A fully automated, stateful pipeline that generates short-form vertical videos for language education from a single text prompt. This agent uses the Google Gemini API for all creative tasks and meticulously logs every action in a SQLite database, ensuring full traceability and recoverability.
 
-<video width="200" height="400" controls>
-  <source src="output/hindi-street-food-words-20250702025058/final_video.mp4" type="video/mp4">
-</video>
-
-<video width="200" height="400" controls>
-  <source src="output/indonesian-seafood-words-20250702033201/final_video.mp4" type="video/mp4">
-</video>
-
-<video width="200" height="400" controls>
-  <source src="output/spanish-beach-words-20250701185747/final_video.mp4" type="video/mp4">
-</video>
+| Example 1 | Example 2 | Example 3 |
+| :-: | :-: | :-: |
+| <video src="https://github.com/user-attachments/assets/ca68b842-f8df-4eea-a3e7-3255bf83fe79" width="200" height="150" controls></video> | <video src="https://github.com/user-attachments/assets/f6e41cdf-3e4d-4024-9981-bc131d685f11" width="200" height="150" controls></video> | <video src="https://github.com/user-attachments/assets/2a76f6f3-eed8-4c15-8dc8-50bc616a0750" width="200" height="150" controls></video |
 
 ## ✨ Key Features
 
