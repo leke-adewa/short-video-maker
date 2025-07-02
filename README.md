@@ -113,7 +113,7 @@ The core logic is encapsulated within the `agent/` package:
 
 5.  **Install FFmpeg and ImageMagick (for MoviePy):**
 
-    - **FFmpeg:** [MoviePy Docs on FFmpeg](https://zulko.github.io/moviepy/install.html)
+    - **FFmpeg:** [MoviePy Docs on FFmpeg](https://zulko.github.io/moviepy/getting_started/install.html)
     - **ImageMagick:** [ImageMagick Download Page](https://imagemagick.org/script/download.php)
 
 6.  **Install Fonts (Recommended for best quality):**
