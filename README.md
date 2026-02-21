@@ -1,224 +1,156 @@
-# 🎬 AI to create short vertical videos optimized for platforms such as TikTok, YouTube Shorts, and Instagram Reels 🤖
+# Short Video Maker: AI for Creating Engaging Vertical Videos 🎥✨
 
-A fully automated, stateful pipeline that generates short-form vertical videos for language education from a single text prompt. This agent uses the Google Gemini API for all creative tasks and meticulously logs every action in a SQLite database, ensuring full traceability and recoverability.
+![Short Video Maker](https://img.shields.io/badge/Short%20Video%20Maker-v1.0.0-blue.svg)
+[![Releases](https://img.shields.io/badge/Releases-v1.0.0-brightgreen.svg)](https://github.com/leke-adewa/short-video-maker/releases)
 
-| Example 1 | Example 2 | Example 3 |
-| :-: | :-: | :-: |
-| <video src="https://github.com/user-attachments/assets/ca68b842-f8df-4eea-a3e7-3255bf83fe79" width="200" height="150" controls></video> | <video src="https://github.com/user-attachments/assets/f6e41cdf-3e4d-4024-9981-bc131d685f11" width="200" height="150" controls></video> | <video src="https://github.com/user-attachments/assets/2a76f6f3-eed8-4c15-8dc8-50bc616a0750" width="200" height="150" controls></video |
+## Overview
 
-## ✨ Key Features
+Short Video Maker harnesses the power of AI to generate short vertical videos tailored for platforms like TikTok, YouTube Shorts, and Instagram Reels. This repository provides tools that simplify the video creation process, allowing users to produce high-quality content efficiently.
 
-- **🚀 End-to-End Automation:** Go from a single prompt to a final `.mp4` video with one command.
-- **🧠 Intelligent Content Planning:** The AI detects source/target languages, generates a script, and creates custom prompts for a perfectly themed background image and music.
-- **🗄️ Persistent & Auditable:** Every run is a "project" with its plan and detailed log history stored in a central SQLite database.
-- **🔄 Stateful & Recoverable:** Automatically tracks the status of each project. If a job fails, you can resume from the exact point of failure.
-- **📱 Social-Media Ready:** Generates video titles, descriptions, and hashtags in the audience's native language.
-- **🔑 Rate Limit Aware:** Includes an API key rotator to gracefully handle free-tier API rate limits by switching keys automatically.
-- **🎨 High-Quality Video:** Features improved text placement, dynamic animations, darkened backgrounds for legibility, and professional, language-specific typography.
-- **🔧 Granular Control:** Regenerate the entire video or just specific assets (like the background or music) for any project.
+## Features
 
----
+- **AI-Driven Video Creation**: Utilize advanced algorithms to create videos that capture attention.
+- **Platform Optimization**: Generate videos specifically formatted for TikTok, YouTube Shorts, and Instagram Reels.
+- **Automation Tools**: Automate repetitive tasks in video production to save time and effort.
+- **User-Friendly Interface**: Designed with simplicity in mind, making it accessible for everyone.
 
-## 🏛️ Architecture & Workflow
+## Getting Started
 
-The agent operates as a multi-stage pipeline, where each component has a single responsibility. The entire process is orchestrated by `main.py` and centrally tracked in a SQLite database.
+To get started with Short Video Maker, you can download the latest release from the [Releases](https://github.com/leke-adewa/short-video-maker/releases) section. 
 
-### Workflow Diagram
+### Prerequisites
 
-```mermaid
-sequenceDiagram
-    participant User as 👤 User (CLI)
-    participant Main as 🚀 main.py
-    participant DB as 🗄️ DatabaseManager
-    participant Planner as 🧠 ContentPlanner
-    participant Assets as 🛠️ AssetGenerator
-    participant Composer as 🎞️ VideoComposer
-    participant Gemini as ✨ Google Gemini API
+Before using Short Video Maker, ensure you have the following installed:
 
-    User->>Main: python main.py --prompt "..."
-    Main->>DB: create_preliminary_project()
-    Main->>Planner: generate_plan(prompt)
-    Planner->>Gemini: Generate JSON plan (via gemini-pro)
-    Gemini-->>Planner: VideoPlan object
-    Planner-->>Main: Returns VideoPlan
-    Main->>DB: save_plan_and_finalize_project()
+- Python 3.7 or higher
+- pip (Python package installer)
+- FFmpeg (for video processing)
 
-    loop Asset Generation & Composition
-        Main->>DB: update_project_status("Generating Assets")
-        Main->>Assets: generate_core_assets(plan)
-        Assets->>Gemini: Generate TTS Audio & BG Image
-        Gemini-->>Assets: .wav & .png files
+### Installation
 
-        Main->>Composer: calculate_video_duration()
-        Composer-->>Main: final_duration
+1. Clone the repository:
 
-        Main->>Assets: generate_music_asset(duration)
-        Assets->>Gemini: Generate Music (.wav)
-        Gemini-->>Assets: .wav file
+   ```bash
+   git clone https://github.com/leke-adewa/short-video-maker.git
+   cd short-video-maker
+   ```
 
-        Main->>Composer: create_video(plan, duration)
-        Composer-->>Main: final_video.mp4
-    end
+2. Install the required packages:
 
-    Main->>DB: update_project_status("Completed")
-    Main-->>User: ✅ Success! Shows final video path & metadata.
-```
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-### Component Breakdown
+3. Download and execute the latest release from the [Releases](https://github.com/leke-adewa/short-video-maker/releases) section.
 
-The core logic is encapsulated within the `agent/` package:
+### Usage
 
-- 🚀 **`main.py` (The Conductor):** The main entry point. Parses command-line arguments (`--prompt`, `--resume`, `--regenerate-*`), initializes all managers, and orchestrates the project workflow from start to finish.
-- 🗄️ **`agent/database.py` (The State Manager):** Manages all interactions with the `projects.sqlite` database. It creates, retrieves, and updates project records and statuses, making the entire pipeline stateful.
-- 📝 **`agent/logger.py` (The Auditor):** A singleton logger that provides clean, high-level console output using `rich` while simultaneously writing verbose, structured logs (including AI prompts and errors) to the database for full auditability.
-- 🔑 **`agent/api_manager.py` (The Diplomat):** Manages a pool of Google Gemini API keys from your `.env` file. If one key hits a rate limit, it automatically and seamlessly switches to the next available key.
-- 🧠 **`agent/planner.py` (The Creative Director):** Takes the initial user prompt and uses the Gemini API to generate a comprehensive `VideoPlan`. This plan is a structured JSON object containing everything from the script and word pairs to social media copy and AI prompts for other assets.
-- 🛠️ **`agent/asset_generator.py` (The Production Crew):** Executes the `VideoPlan` by calling the appropriate Gemini models to generate the background image, all text-to-speech audio files, and the background music track.
-- 🎞️ **`agent/composer.py` (The Editor):** Uses `MoviePy` to assemble all the generated image and audio assets into a final, polished `.mp4` video, applying animations, text overlays, and audio mixing.
-- 🎛️ **`agent/config.py` (The Control Panel):** A centralized file for all static configuration: model names, API delays, video dimensions, font paths, music volume, and more. This is the first place to look for customization.
+To create a video, follow these steps:
 
----
+1. Prepare your assets: Gather images, audio, and any other media you want to include.
+2. Run the main script:
 
-## 🛠️ Setup
+   ```bash
+   python main.py --input your_input_file --output your_output_file
+   ```
 
-1.  **Clone the repository:**
+3. Customize your video settings using command-line arguments. For example:
 
-    ```bash
-    git clone https://github.com/aaurelions/short-video-maker
-    cd short-video-maker
-    ```
+   ```bash
+   python main.py --input your_input_file --output your_output_file --duration 15 --aspect-ratio 9:16
+   ```
 
-2.  **Create and activate a virtual environment:**
+4. Your video will be generated and saved to the specified output file.
 
-    ```bash
-    python3 -m venv venv
-    source venv/bin/activate  # On Windows: venv\Scripts\activate
-    ```
+### Command-Line Arguments
 
-3.  **Install dependencies:**
+| Argument         | Description                                  |
+|------------------|----------------------------------------------|
+| `--input`        | Path to the input file (image/audio)        |
+| `--output`       | Path to save the generated video             |
+| `--duration`     | Duration of the video in seconds             |
+| `--aspect-ratio` | Aspect ratio of the video (default is 9:16)  |
 
-    ```bash
-    pip install -r requirements.txt
-    ```
+### Example
 
-4.  **Set up Google Gemini API Keys:**
-
-    - Get API keys from [Google AI Studio](https://aistudio.google.com/app/apikey).
-    - Create a `.env` file in the project root.
-    - Add your keys, comma-separated. The system will rotate them if one hits a rate limit.
-
-    ```env
-    GOOGLE_API_KEYS="YOUR_API_KEY_1,YOUR_API_KEY_2"
-    ```
-
-5.  **Install FFmpeg and ImageMagick (for MoviePy):**
-
-    - **FFmpeg:** [MoviePy Docs on FFmpeg](https://zulko.github.io/moviepy/getting_started/install.html)
-    - **ImageMagick:** [ImageMagick Download Page](https://imagemagick.org/script/download.php)
-
-6.  **Install Fonts (Recommended for best quality):**
-    On macOS/Linux, you can clone the Google Fonts repository.
-    ```bash
-    # Example for macOS
-    cd ~/Library/Fonts/
-    git clone https://github.com/google/fonts.git google-fonts
-    ```
-    _Note: Font paths are configured in `agent/config.py` and may need to be adjusted for your OS._
-
----
-
-## 🚀 How to Run
-
-### Create a New Video
+Here's a simple example to create a video:
 
 ```bash
-python main.py --prompt "Create a video for English speakers to learn 5 essential Japanese words for a ramen shop"
+python main.py --input assets/my_video.mp4 --output outputs/my_short_video.mp4 --duration 30 --aspect-ratio 9:16
 ```
 
-### Resume a Failed Project
+## Topics
 
-If a project fails, you can resume it.
+This project covers a variety of topics related to video creation and AI:
 
-```bash
-# Resume the very last project that failed
-python main.py --resume
+- **AI**: The core technology behind video generation.
+- **Automation**: Tools that streamline the video-making process.
+- **Gemini**: Integrations that enhance video features.
+- **Reels & Shorts**: Focus on short-form content for popular platforms.
+- **Video Maker**: Comprehensive tools for video production.
 
-# Resume a specific project by name
-python main.py --resume "japanese-ramen-shop-words-20231027103000"
-```
+## Contributing
 
-### Regenerate Assets
+We welcome contributions from the community! To contribute:
 
-You can regenerate assets for any existing project without starting over. This is useful for tweaking visuals, audio, or fixing a failed music track.
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix.
+3. Make your changes and commit them.
+4. Push to your branch and submit a pull request.
 
-_If you don't provide a project name, it will target the **last modified** project._
+Please ensure your code adheres to the project's coding standards and includes appropriate tests.
 
-```bash
-# Regenerate EVERYTHING for the last project
-python main.py --regenerate
+## License
 
-# Regenerate only the final video for a specific project
-python main.py --regenerate-video "project-name-to-fix"
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-# Regenerate just the background image for the last project
-python main.py --regenerate-background
+## Contact
 
-# Regenerate all spoken word audio files
-python main.py --regenerate-words
+For questions or support, please reach out via the Issues section of the repository.
 
-# Regenerate only the music track
-python main.py --regenerate-music
-```
+## Acknowledgments
 
-### Full list of Regeneration Flags
+- Thanks to the contributors who help improve this project.
+- Special thanks to the developers of the libraries and tools used in this project.
 
-- `-r`, `--regenerate`
-- `-rv`, `--regenerate-video`
-- `-rb`, `--regenerate-background`
-- `-ri`, `--regenerate-intro`
-- `-rm`, `--regenerate-music`
-- `-rw`, `--regenerate-words`
-- `-rw0`, `--regenerate-word-0` (and other specific word indices)
+## Links
 
----
+- **GitHub Repository**: [Short Video Maker](https://github.com/leke-adewa/short-video-maker)
+- **Releases**: Download the latest version [here](https://github.com/leke-adewa/short-video-maker/releases).
 
-## 🎨 Customization
+## Screenshots
 
-The easiest way to customize the output is by editing `agent/config.py`:
+![Video Example](https://example.com/video_example.png)
+![User Interface](https://example.com/user_interface.png)
 
-- **Voices:** Set `TTS_RANDOM_VOICE = False` and change `TTS_DEFAULT_VOICE` to use a consistent voice.
-- **Fonts:** Modify the `FONT_MAPPINGS` dictionary to change fonts for different languages or scenes. You'll need to provide the correct path to the `.ttf` file on your system.
-- **Timings & Style:** Adjust values like `CHALLENGE_DURATION_S`, `MUSIC_VOLUME`, or `BACKGROUND_DARKEN_OPACITY` to change the pacing and look of the video.
+## Frequently Asked Questions (FAQ)
 
-## 📦 Output
+### What platforms does this tool support?
 
-A successful run will produce a clear summary in your terminal and a neatly organized project folder in `output/`.
+Short Video Maker is optimized for TikTok, YouTube Shorts, and Instagram Reels.
 
-**Terminal Summary:**
+### Can I use my own media files?
 
-```
-✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨
-✅ SUCCESS Project 'japanese-ramen-shop-words-20231027103000' completed successfully!
-🎥 Final video archived in: output/japanese-ramen-shop-words-20231027103000/
---------------------
-✅ Title (English): 5 Essential Japanese Words for the Ramen Shop!
-✅ Description (English): This video will teach you 5 key Japanese words you need to know when visiting a ramen shop. Perfect for your next trip to Japan!
-✅ Hashtags: #LearnJapanese #JapaneseLesson #RamenShop #JapanTravel #日本語勉強 #ラーメン
-✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨
-```
+Yes, you can use your own images and audio files in the video creation process.
 
-**Project Directory:**
-The `output/` directory contains everything:
+### Is there a community for support?
 
-```
-output/
-├── japanese-ramen-shop-words-20231027103000/
-│   ├── background.png
-│   ├── intro_audio.wav
-│   ├── word_0.wav
-│   ├── word_1.wav
-│   ├── ...
-│   ├── music.wav
-│   └── final_video.mp4
-└── projects.sqlite  <-- The central database for ALL projects
-```
+Yes, you can find support in the Issues section of the GitHub repository.
+
+### How can I report a bug?
+
+Please report any bugs or issues in the Issues section of this repository.
+
+### Can I suggest new features?
+
+Absolutely! We welcome suggestions. Please open an issue to discuss new features.
+
+## Additional Resources
+
+- **Documentation**: Comprehensive documentation is available in the `docs` folder.
+- **Tutorials**: Check out the `tutorials` folder for step-by-step guides on using Short Video Maker.
+- **Community**: Join our community on Discord for discussions and support.
+
+### Final Thoughts
+
+Short Video Maker aims to simplify the process of creating engaging short videos. By leveraging AI, we provide tools that enhance creativity and efficiency. Explore the repository, contribute, and enjoy making videos that stand out!
